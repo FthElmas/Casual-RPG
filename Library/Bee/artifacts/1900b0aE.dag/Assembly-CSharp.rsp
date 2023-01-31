@@ -355,9 +355,9 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/Scripts/FollowCamera.cs"
-"Assets/Scripts/Mover.cs"
-"Assets/Scripts/PlayerAnimation.cs"
+"Assets/Scripts/Animations/PlayerAnimation.cs"
+"Assets/Scripts/Controllers/PlayerController.cs"
+"Assets/Scripts/Core/FollowCamera.cs"
 -langversion:9.0
 
 /deterministic
