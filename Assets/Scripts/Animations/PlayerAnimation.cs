@@ -15,12 +15,17 @@ namespace RPG.Anim
 
     float speed;
     Animator _anim;
-    Transform target;
+    Health target;
     [SerializeField] private float weaponRange = 2f;
     [SerializeField] private float timeBetweenAttacks = 1f;
     PlayerController control;
     private float timeSinceLastAttack = 0;
-
+    Health healthComponent;
+    private bool animCheck = false;
+    ActionScheduler action;
+    Fighter fightComponent;
+    
+    
     
     
     
@@ -30,19 +35,42 @@ namespace RPG.Anim
     {
         _anim = GetComponent<Animator>();
         control = GetComponent<PlayerController>();
-
-        
+        healthComponent = GetComponent<Health>();
+        action = GetComponent<ActionScheduler>();
+        fightComponent = GetComponent<Fighter>();
         
     }
 
     
     void Update()
     {
+        
         UpdateAnimator();
+        
+        
+        if(healthComponent.isDie())
+        {   
+            DeathAnimation();
+        }
+        
+       if(fightComponent.isInCombat())
+       {
+        StopAttack();
+       }
+       
+
+       
         AttackAnimation();
+        
+        
+        
+        
         timeSinceLastAttack += Time.deltaTime;
         
     }
+
+    
+   
     
 
     private void UpdateAnimator()
@@ -57,30 +85,64 @@ namespace RPG.Anim
     public void Attack(CombatTarget combatTarget)
     {   
         
-        target = combatTarget.transform;
+        target = combatTarget.GetComponent<Health>();
       
     }
+
+    
+
+    public void StopAttack()
+    {
+        
+       _anim.SetTrigger("stopAttack"); 
+        
+    }
+
+
 
     private void AttackAnimation()
     {
         if (target == null) return;
        
+        if(target.isDie()) return;
+
+        
+
         if(IsInRange() && timeSinceLastAttack > timeBetweenAttacks)
         {
             _anim.SetTrigger("attack");
             timeSinceLastAttack = 0 ;
 
         }
+      
+        
+        
+ 
     }
     
 
+    private void DeathAnimation()
+    {
+       
+
+       if(animCheck) return;
+        
+        animCheck = true;
+
+        _anim.SetTrigger("die");
+        
+
+    }
+
+    
     public bool IsInRange()
         {
-            return Vector3.Distance(transform.position, target.position) < weaponRange;
+            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
         }
 
    
-
+   
+  
     
 
   

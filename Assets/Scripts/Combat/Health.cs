@@ -8,11 +8,27 @@ namespace RPG.Combat
     {
         [SerializeField] private float health = 100f;
 
+        
+
+       
+        //The health decreases on specific damage input
         public void TakeDamage(float damage)
         {
             health = Mathf.Max(health - damage, 0);
             print(health);
+    
         }
+
+       
+        public bool isDie()
+        {
+          return health == 0 ;
+        }
+
+       
+       
+
+
     }
 
 }
