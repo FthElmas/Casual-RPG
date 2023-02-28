@@ -53,10 +53,15 @@ namespace RPG.Anim
             DeathAnimation();
         }
         
+        if (!fightComponent.isInCombat())
+        {
+            ResetAttack();
+        }
        if(fightComponent.isInCombat())
        {
         StopAttack();
        }
+       
        
 
        
@@ -90,7 +95,10 @@ namespace RPG.Anim
     }
 
     
-
+    public void ResetAttack()
+    {
+        _anim.ResetTrigger("stopAttack");
+    }
     public void StopAttack()
     {
         

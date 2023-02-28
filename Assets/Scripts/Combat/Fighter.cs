@@ -74,7 +74,8 @@ namespace RPG.Combat
             target.TakeDamage(weaponDamage);
         }
         public bool isInCombat()
-        {
+        {   
+            if(target != null) return false;
             return target == null;
         }
         public void Cancel()

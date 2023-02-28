@@ -13,15 +13,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3552958455884797919, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.18
       objectReference: {fileID: 0}
     - target: {fileID: 3552958455884797919, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.000002861023
       objectReference: {fileID: 0}
     - target: {fileID: 3552958455884797919, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 6.86
       objectReference: {fileID: 0}
     - target: {fileID: 3552958455884797919, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -55,12 +55,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6234871464534298536, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8030274480123219831, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3f6fc0cf5e5d31c458bc74ede87cb8ae, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
+--- !u!195 &3338227791784826858 stripped
+NavMeshAgent:
+  m_CorrespondingSourceObject: {fileID: 1692165885, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
+  m_PrefabInstance: {fileID: 3338227790103687447}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8706991817490366143 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6234871464534298536, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
@@ -78,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa98b5cb92299748abc81720517b8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navMeshAgent: {fileID: 0}
+  navMeshAgent: {fileID: 3338227791784826858}
 --- !u!114 &6519229158888204783
 MonoBehaviour:
   m_ObjectHideFlags: 0
