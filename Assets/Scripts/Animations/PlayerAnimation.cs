@@ -87,7 +87,7 @@ namespace RPG.Anim
         _anim.SetFloat("forwardSpeed", speed);
     }
 
-    public void Attack(CombatTarget combatTarget)
+    public void Attack(GameObject combatTarget)
     {   
         
         target = combatTarget.GetComponent<Health>();

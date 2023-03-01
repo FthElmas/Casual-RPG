@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using RPG.Control;
 using RPG.Core;
+using RPG.Movement;
 
 namespace RPG.Combat
 {
@@ -11,7 +12,7 @@ namespace RPG.Combat
    {
     [SerializeField] private float weaponRange = 2f;
     Health target;
-    PlayerController control;
+    Mover move;
     ActionScheduler action;
     Health targetHealth;
 
@@ -21,7 +22,7 @@ namespace RPG.Combat
     
     void Awake()
     {
-        control = GetComponent<PlayerController>();
+        move = GetComponent<Mover>();
         action = GetComponent<ActionScheduler>();
         targetHealth = GetComponent<Health>();
         
@@ -42,11 +43,11 @@ namespace RPG.Combat
 
             if (!GetIsInRange())
             {
-                control.MoveTo(target.transform.position);
+                move.MoveTo(target.transform.position);
             }
             else
             {
-                control.Cancel();
+                move.Cancel();
                 transform.LookAt(target.transform);
                 
             }
@@ -60,7 +61,7 @@ namespace RPG.Combat
 
     
         // combat mode for the player when player encounters an enemy
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
             {
                 action.StartAction(this);
                 target = combatTarget.GetComponent<Health>();
@@ -85,7 +86,7 @@ namespace RPG.Combat
         }
 
 
-        public bool CanAttack(CombatTarget combatTarget)
+        public bool CanAttack(GameObject combatTarget)
         {
             if(combatTarget == null) return false;
 

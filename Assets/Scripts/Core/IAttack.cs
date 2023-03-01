@@ -8,6 +8,6 @@ namespace RPG.Core
 {
     public interface IAttack
     {
-        void Attack(CombatTarget combatTarget);
+        void Attack(GameObject combatTarget);
     }
 }

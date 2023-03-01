@@ -5,21 +5,24 @@ using UnityEngine.AI;
 using RPG.Core;
 using RPG.Combat;
 using RPG.Anim;
+using RPG.Movement;
 
 namespace RPG.Control
 {
-    public class PlayerController : MonoBehaviour, IAction
+    public class PlayerController : MonoBehaviour
     {
    
-        public NavMeshAgent navMeshAgent;
+        
         Fighter fighter;
         PlayerAnimation _animation;
+        Mover move;
 
         void Awake()
         {
-            navMeshAgent = GetComponent<NavMeshAgent>();
+            
             fighter = GetComponent<Fighter>();
             _animation = GetComponent<PlayerAnimation>();
+            move = GetComponent<Mover>();
         }
         void Update()
             {
@@ -30,11 +33,7 @@ namespace RPG.Control
             }
 
 
-        public void StartMoveAction(Vector3 destination)
-        {
-            GetComponent<ActionScheduler>().StartAction(this);
-            MoveTo(destination);
-        }
+       
 
         //Created an array of rays named hits, foreach ray that hits to the target so the player can attack and calls the attack animation
         public bool InteractWithCombat()
@@ -43,14 +42,15 @@ namespace RPG.Control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if(!(fighter.CanAttack(target))) continue;
+                if(target == null) continue;
 
-                
+                if(!(fighter.CanAttack(target.gameObject))) continue;
+
                 
                 if (Input.GetMouseButtonDown(0))
                 {
-                    fighter.Attack(target);
-                    _animation.Attack(target);
+                    fighter.Attack(target.gameObject);
+                    _animation.Attack(target.gameObject);
                     
                 }
                
@@ -72,7 +72,7 @@ namespace RPG.Control
                 {
                     if (Input.GetMouseButton(0))
                     {
-                        StartMoveAction(hit.point);
+                        move.StartMoveAction(hit.point);
                         
                         
                     }
@@ -83,16 +83,7 @@ namespace RPG.Control
         }
         
         //Takes a Vector and changes navmesh's position according to the vector
-        public void MoveTo(Vector3 destination)
-        {
-            navMeshAgent.destination = destination;
-            navMeshAgent.isStopped = false;
-        }
-
-        public void Cancel()
-        {
-            navMeshAgent.isStopped = true;
-        }
+        
 
         //Creates a ray from camera to the screen
         private static Ray GetMouseRay()

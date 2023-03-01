@@ -366,6 +366,7 @@
 "Assets/Scripts/Core/FollowCamera.cs"
 "Assets/Scripts/Core/IAction.cs"
 "Assets/Scripts/Core/IAttack.cs"
+"Assets/Scripts/Movement/Mover.cs"
 -langversion:9.0
 
 /deterministic
