@@ -10,11 +10,18 @@ public class Mover : MonoBehaviour, IAction
 {
     ActionScheduler action;
     NavMeshAgent navMeshAgent;
+    Health health;
 
     private void Awake()
     {   
+        health = GetComponent<Health>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         action = GetComponent<ActionScheduler>();
+    }
+
+    private void Update()
+    {
+        DisableNavMeshOnDeath();
     }
     public void StartMoveAction(Vector3 destination)
             {
@@ -32,6 +39,11 @@ public class Mover : MonoBehaviour, IAction
         {
             navMeshAgent.isStopped = true;
         }
+
+    public void DisableNavMeshOnDeath()
+    {
+        navMeshAgent.enabled = !health.StopOnDeath();
+    }
 }
 
 }

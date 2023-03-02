@@ -19,7 +19,7 @@ namespace RPG.Anim
     [SerializeField] private float weaponRange = 2f;
     [SerializeField] private float timeBetweenAttacks = 1f;
     PlayerController control;
-    private float timeSinceLastAttack = 0;
+    private float timeSinceLastAttack = Mathf.Infinity;
     Health healthComponent;
     private bool animCheck = false;
     ActionScheduler action;
@@ -132,7 +132,7 @@ namespace RPG.Anim
     private void DeathAnimation()
     {
        
-
+        
        if(animCheck) return;
         
         animCheck = true;

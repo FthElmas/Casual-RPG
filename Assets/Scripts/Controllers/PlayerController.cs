@@ -16,16 +16,18 @@ namespace RPG.Control
         Fighter fighter;
         PlayerAnimation _animation;
         Mover move;
+        Health healthComponent;
 
         void Awake()
         {
-            
+            healthComponent = GetComponent<Health>();
             fighter = GetComponent<Fighter>();
             _animation = GetComponent<PlayerAnimation>();
             move = GetComponent<Mover>();
         }
         void Update()
             {
+                if(healthComponent.StopOnDeath()) return;
                 if(InteractWithCombat())  return; 
                 if(InteractWithMovement()) return;
                     print("Out of map");
