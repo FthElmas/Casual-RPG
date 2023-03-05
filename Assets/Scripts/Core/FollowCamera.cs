@@ -8,9 +8,18 @@ namespace RPG.Core
 {
     [SerializeField] private Transform target;
 
+
     void LateUpdate()
     {
         transform.position = target.position;
+    }
+
+    private void RotateCamera()
+    {
+        if(Input.GetMouseButtonDown(1))
+        {
+            
+        }
     }
 }
 }

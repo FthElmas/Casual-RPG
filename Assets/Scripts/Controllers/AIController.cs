@@ -5,29 +5,45 @@ using UnityEngine.AI;
 using RPG.Combat;
 using RPG.Core;
 using RPG.Anim;
-
+using System;
+using RPG.Movement;
 
 namespace RPG.Control
 {
 public class AIController : MonoBehaviour
 {
     [SerializeField] private float chaseDistance = 5f;
+    [SerializeField]private float wayPointTolerance = 1f;
+    [SerializeField]private float suspicionTime = 5f;
+    [SerializeField]PatrolPathControl patrolPath;
+    [SerializeField]private float waypointDwellTime = 3f;
+    
+
+
+    Vector3 guardPosition;
+    private float timeSinceLastSawPlayer = Mathf.Infinity;
+    private float timeSinceLastWaypoint = Mathf.Infinity;
+    protected int currentWaypointIndex = 0;
+    
+
+
     GameObject player;
     Health target;
     PlayerAnimation _anim;
     Fighter fighter;
-    Vector3 guardPosition;
-    NavMeshAgent navMeshPosition;
-    private float timeSinceLastSawPlayer = Mathf.Infinity;
+    Mover mover;
+    ActionScheduler aiAction;
 
     private void Awake()
     {
-        navMeshPosition = GetComponent<NavMeshAgent>();
+        aiAction = GetComponent<ActionScheduler>();
+        mover = GetComponent<Mover>();
         player = GameObject.FindWithTag("Player");
         target = GetComponent<Health>();
         fighter = GetComponent<Fighter>();
         _anim = GetComponent<PlayerAnimation>();
         guardPosition = transform.position;
+        
     }
     private void Update()
     {   
@@ -35,27 +51,44 @@ public class AIController : MonoBehaviour
         
         ChaseToAttack();
         
+        UpdateTimers();
+        
+        
+    }
 
+    private void UpdateTimers()
+    {
         timeSinceLastSawPlayer += Time.deltaTime;
+        timeSinceLastWaypoint += Time.deltaTime;
     }
 
     private void ChaseToAttack()
     {
         if(DistanceToPlayer() && fighter.CanAttack(player))
+            {
+                AttackBehaviour();
+            }
+            else if(timeSinceLastSawPlayer < suspicionTime)
         {
-            fighter.Attack(player);
-            _anim.Attack(player);
+            SuspicionBehaviour();
         }
         else
         {
-            fighter.Cancel();
-            BackToPlace();
+            
+            PatrolBehaviour();
         }
            
         
     }
 
-    private bool DistanceToPlayer()
+        private void AttackBehaviour()
+        {
+            timeSinceLastSawPlayer = 0;
+            fighter.Attack(player);
+            _anim.Attack(player);
+        }
+
+        private bool DistanceToPlayer()
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
                 return distanceToPlayer < chaseDistance;
@@ -67,11 +100,48 @@ public class AIController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, chaseDistance);
     }
 
-    private void BackToPlace()
+    private void PatrolBehaviour()
     {
-       
-        navMeshPosition.destination = guardPosition;
+        Vector3 nextPosition = guardPosition;
+
+        if (patrolPath != null)
+        {
+            if(AtWayPoint())
+            {
+                timeSinceLastWaypoint = 0;
+                CycleWayPoint();
+            }
+            
+            nextPosition = GetCurrentWaypoint();
+        }
+        if(timeSinceLastWaypoint > waypointDwellTime)
+        {
+            mover.StartMoveAction(nextPosition);
+
+        }
         
+    }
+        private bool AtWayPoint()
+        {
+            float distanceToWaypoint = Vector3.Distance(transform.position, GetCurrentWaypoint());
+            return distanceToWaypoint < wayPointTolerance;
+        }
+        private void CycleWayPoint()
+        {
+            currentWaypointIndex = patrolPath.GetNextIndex(currentWaypointIndex);
+        }
+        private Vector3 GetCurrentWaypoint()
+        {
+            return patrolPath.GetWaypoint(currentWaypointIndex);
+        }
+
+        
+
+        
+
+        private void SuspicionBehaviour()
+    {
+        aiAction.CancelCurrentAction();
     }
 }
 }

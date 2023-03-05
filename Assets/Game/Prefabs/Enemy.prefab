@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1692165885, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_Speed
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3552958455884797919, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_RootOrder
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6234871464534298536, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
       propertyPath: m_Name
-      value: Enemy (3)
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b00658aadb54dd45aad59b3089351b5, type: 3}
@@ -109,3 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseDistance: 5
+  wayPointTolerance: 1
+  suspicionTime: 5
+  patrolPath: {fileID: 0}
