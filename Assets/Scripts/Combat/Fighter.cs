@@ -43,7 +43,7 @@ namespace RPG.Combat
 
             if (!GetIsInRange())
             {
-                move.MoveTo(target.transform.position);
+                move.MoveTo(target.transform.position, 1f);
             }
             else
             {
@@ -71,7 +71,7 @@ namespace RPG.Combat
         // Hit() is called on the exact impact moment to the target by the animator
         public void Hit()
         {   
-            
+            if(target == null) return;
             target.TakeDamage(weaponDamage);
         }
         public bool isInCombat()
@@ -81,8 +81,8 @@ namespace RPG.Combat
         }
         public void Cancel()
         {
-            
             target = null;
+            move.Cancel();
         }
 
 

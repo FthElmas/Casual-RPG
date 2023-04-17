@@ -57,10 +57,10 @@ namespace RPG.Anim
         {
             ResetAttack();
         }
-       if(fightComponent.isInCombat())
-       {
-        StopAttack();
-       }
+        if(fightComponent.isInCombat())
+        {
+            StopAttack();
+        }
        
        
 

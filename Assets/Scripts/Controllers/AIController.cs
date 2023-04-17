@@ -17,6 +17,9 @@ public class AIController : MonoBehaviour
     [SerializeField]private float suspicionTime = 5f;
     [SerializeField]PatrolPathControl patrolPath;
     [SerializeField]private float waypointDwellTime = 3f;
+
+    [Range(0, 1)]
+    [SerializeField]private float patrolSpeedFrac = 0.2f;
     
 
 
@@ -116,7 +119,7 @@ public class AIController : MonoBehaviour
         }
         if(timeSinceLastWaypoint > waypointDwellTime)
         {
-            mover.StartMoveAction(nextPosition);
+            mover.StartMoveAction(nextPosition, patrolSpeedFrac);
 
         }
         
