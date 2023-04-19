@@ -29,10 +29,13 @@ public class AIController : MonoBehaviour
     protected int currentWaypointIndex = 0;
     
 
+    public delegate void AttackDelegate(GameObject combatTarget);
+    public event AttackDelegate onAttackBehaviour;
+
+
 
     GameObject player;
     Health target;
-    PlayerAnimation _anim;
     Fighter fighter;
     Mover mover;
     ActionScheduler aiAction;
@@ -44,7 +47,7 @@ public class AIController : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         target = GetComponent<Health>();
         fighter = GetComponent<Fighter>();
-        _anim = GetComponent<PlayerAnimation>();
+        
         guardPosition = transform.position;
         
     }
@@ -86,9 +89,11 @@ public class AIController : MonoBehaviour
 
         private void AttackBehaviour()
         {
+
             timeSinceLastSawPlayer = 0;
             fighter.Attack(player);
-            _anim.Attack(player);
+            onAttackBehaviour?.Invoke(player);
+            
         }
 
         private bool DistanceToPlayer()

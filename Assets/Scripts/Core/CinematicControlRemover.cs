@@ -17,14 +17,14 @@ namespace RPG.Core
             GetComponent<PlayableDirector>().stopped += EnableControl;
             player = GameObject.FindWithTag("Player");
         }
-        private void DisableControl(PlayableDirector pb)
+        private void DisableControl(PlayableDirector pd)
         {
             
             player.GetComponent<ActionScheduler>().CancelCurrentAction();
             player.GetComponent<PlayerController>().enabled = false;
         }
 
-        private void EnableControl(PlayableDirector pb)
+        private void EnableControl(PlayableDirector pd)
         {
             print("continue");
             player.GetComponent<PlayerController>().enabled = true;

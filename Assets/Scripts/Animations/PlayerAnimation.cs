@@ -24,7 +24,9 @@ namespace RPG.Anim
     private bool animCheck = false;
     ActionScheduler action;
     Fighter fightComponent;
-    
+    AIController aiControl;
+
+
     
     
     
@@ -38,9 +40,17 @@ namespace RPG.Anim
         healthComponent = GetComponent<Health>();
         action = GetComponent<ActionScheduler>();
         fightComponent = GetComponent<Fighter>();
+        aiControl = GetComponent<AIController>();
         
     }
 
+
+    void Start()
+    {
+        if(aiControl == null) return;
+        aiControl.onAttackBehaviour += Attack;
+        
+    }
     
     void Update()
     {
